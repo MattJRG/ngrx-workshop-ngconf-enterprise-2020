@@ -22,6 +22,7 @@ import { AppComponent } from "./app.component";
       { path: "", pathMatch: "full", redirectTo: "/books" }
     ]),
     StoreModule.forRoot(reducers, { metaReducers }),
+    // Enables dev tools
     StoreDevtoolsModule.instrument(),
     EffectsModule.forRoot([]),
     MaterialModule,

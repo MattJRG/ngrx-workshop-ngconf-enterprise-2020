@@ -9,13 +9,13 @@
     {
       "id": "408c6851-7b7a-439e-b6db-9fb65ea61071",
       "name": "The Adventures of Pinocchio",
-      "earnings": "85000000",
+      "earnings": "85000009",
       "description": ""
     },
     {
       "id": "3fe92243-8444-4ee4-bb39-b5460b8919f1",
       "name": "The Hobbit",
-      "earnings": "1000000005",
+      "earnings": "1000000010",
       "description": null
     },
     {
@@ -25,10 +25,10 @@
       "description": "Great book about a spooks apprentice "
     },
     {
-      "id": "1fbdccee-6076-4e28-92cf-a94df758b886",
-      "name": "New Book",
-      "earnings": "5000",
-      "description": "This is a new book"
+      "id": "0a03fb74-6b58-4d44-ac2d-8bad3d6d0331",
+      "name": "New book yay",
+      "earnings": "100090",
+      "description": "Testing functionality"
     }
   ]
 }
