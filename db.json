@@ -15,8 +15,20 @@
     {
       "id": "3fe92243-8444-4ee4-bb39-b5460b8919f1",
       "name": "The Hobbit",
-      "earnings": "100000000",
+      "earnings": "1000000005",
       "description": null
+    },
+    {
+      "id": "5d60374e-c232-43c0-8646-14dd9dec4d9f",
+      "name": "Spook",
+      "earnings": "5000000",
+      "description": "Great book about a spooks apprentice "
+    },
+    {
+      "id": "1fbdccee-6076-4e28-92cf-a94df758b886",
+      "name": "New Book",
+      "earnings": "5000",
+      "description": "This is a new book"
     }
   ]
 }

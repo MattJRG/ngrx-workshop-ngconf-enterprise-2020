@@ -9,8 +9,7 @@
       <mat-list-item
         *ngFor="let book of books"
         (click)="select.emit(book)"
-        class="record"
-      >
+        class="record">
         <h3 mat-line>{{ book.name }}</h3>
         <p mat-line>
           {{ book.description }}
@@ -21,8 +20,7 @@
         <button
           *ngIf="!readonly"
           mat-icon-button
-          (click)="delete.emit(book); $event.stopImmediatePropagation()"
-        >
+          (click)="delete.emit(book); $event.stopImmediatePropagation()">
           <mat-icon>close</mat-icon>
         </button>
       </mat-list-item>

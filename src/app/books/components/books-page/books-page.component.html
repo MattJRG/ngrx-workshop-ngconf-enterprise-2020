@@ -5,8 +5,7 @@
     <app-books-list
       [books]="books"
       (select)="onSelect($event)"
-      (delete)="onDelete($event)"
-    >
+      (delete)="onDelete($event)">
     </app-books-list>
   </div>
 
@@ -14,7 +13,6 @@
     class="col-50"
     [book]="currentBook"
     (save)="onSave($event)"
-    (cancel)="onCancel()"
-  >
+    (cancel)="onCancel()">
   </app-book-detail>
 </div>
