@@ -2,7 +2,12 @@ import { Component, OnInit } from "@angular/core";
 import { BookModel, BookRequiredProps } from "src/app/shared/models";
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
-import { State, selectAllBooks, selectActiveBook, selectBooksEarningsTotals } from '../../../shared/state';
+import {
+  State,
+  selectAllBooks,
+  selectActiveBook,
+  selectBooksEarningsTotals,
+} from '../../../shared/state';
 import * as BooksPageActions from '../../actions/books-page.actions';
 
 @Component({
@@ -12,7 +17,7 @@ import * as BooksPageActions from '../../actions/books-page.actions';
 })
 export class BooksPageComponent implements OnInit {
   books$: Observable<BookModel[]>;
-  currentBook$: Observable<BookModel | null>;
+  currentBook$: Observable<BookModel | null | undefined>;
   total$: Observable<number>;
 
   constructor(

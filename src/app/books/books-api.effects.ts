@@ -19,6 +19,18 @@ export class BooksApiEffects {
     )
   );
 
+  // Just for fun
+  // makeCheese$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(BooksPageActions.enter),
+  //     exhaustMap(() =>
+  //       this.booksService
+  //         .all()
+  //         .pipe(map(books => BooksPageActions.cheeseReady({cheeseNo: Math.random()})))
+  //     )
+  //   )
+  // );
+
   createBook$ = createEffect(() =>
     this.actions$.pipe(
       ofType(BooksPageActions.createBook),

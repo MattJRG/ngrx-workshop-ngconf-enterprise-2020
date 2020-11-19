@@ -29,6 +29,18 @@
       "name": "New book yay",
       "earnings": "100090",
       "description": "Testing functionality"
+    },
+    {
+      "id": "e5ed65d9-147b-4a91-837d-d349c0c43d8b",
+      "name": "Test",
+      "earnings": "10000",
+      "description": "Testing"
+    },
+    {
+      "id": "a6e81a1f-f83e-41ec-993f-e810e8e59492",
+      "name": "Inception 5",
+      "earnings": "60000000",
+      "description": "Good Stuff!"
     }
   ]
 }

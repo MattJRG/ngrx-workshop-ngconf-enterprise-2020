@@ -1,27 +1,22 @@
 import { createReducer, on, Action, createSelector } from "@ngrx/store";
 import { BookModel, calculateBooksGrossEarnings } from "src/app/shared/models";
 import { BooksPageActions, BooksApiActions } from "src/app/books/actions";
+import {createEntityAdapter, EntityState} from "@ngrx/entity";
 
-// Helper functions
-const createBook = (books: BookModel[], book: BookModel) => [...books, book];
-// Copy array but if id is the one with changes we copy that books data but adds the changes we have
-const updateBook = (books: BookModel[], changes: BookModel) =>
-    books.map(book => {
-        return book.id === changes.id ? Object.assign({}, book, changes) : book;
-    });
-const deleteBook = (books: BookModel[], bookId: string) =>
-    books.filter(book => bookId !== book.id);
-// End of helper functions
-
-export interface State {
-    collection: BookModel[];
+export interface State extends EntityState<BookModel> {
     activeBookId: string | null;
 }
 
-export const initialState: State = {
-    collection: [],
-    activeBookId: null
-};
+export const adapter = createEntityAdapter<BookModel>({
+    // Can use if the data id isn't just "id" e.g. "key" or "_id"
+    selectId: book => book.id,
+    // Can use the adapter to sort the collection
+    sortComparer: (bookA, bookB) => bookA.name.localeCompare(bookB.name)
+});
+
+export const initialState: State = adapter.getInitialState({
+    activeBookId: null,
+});
 
 export const booksReducer = createReducer(
     initialState,
@@ -34,35 +29,31 @@ export const booksReducer = createReducer(
     on(BooksPageActions.selectBook, (state, action) => {
         return {
             ...state,
-            activeBookId: action.bookId
+            activeBookId: action.bookId,
         };
     }),
     // Pull #5
     // When books are initially loaded we set the collection to be the array of books
     on(BooksApiActions.booksLoaded, (state, action) => {
-        return {
-            ...state,
-            collection: action.books
-        };
+        return adapter.setAll(action.books, state);
     }),
     on(BooksApiActions.bookCreated, (state, action) => {
-        return {
+        // Also have upsertOne method to add if it's not there or update if it is
+        return adapter.addOne(action.book, {
             ...state,
-            collection: createBook(state.collection, action.book),
-        };
+            activeBookId: null,
+        });
     }),
     on(BooksApiActions.bookUpdated, (state, action) => {
-        return {
-            ...state,
-            collection: updateBook(state.collection, action.book),
-        };
+        return adapter.updateOne({id: action.book.id, changes: action.book},
+          {
+                ...state,
+                activeBookId: null,
+            });
     }),
     on(BooksApiActions.bookDeleted, (state, action) => {
-        return {
-            ...state,
-            collection: deleteBook(state.collection, action.bookId)
-        };
-    })
+        return adapter.removeOne(action.bookId, state);
+    }),
 );
 
 export function reducer(state: State | undefined, action: Action) {
@@ -71,18 +62,21 @@ export function reducer(state: State | undefined, action: Action) {
 
 // Pull #6 - Selectors
 // Getter selectors
-export const selectAll = (state: State) => state.collection;
+export const { selectAll, selectEntities } = adapter.getSelectors();
 export const selectActiveBookId = (state: State) => state.activeBookId;
+
 // Complex selectors - createSelector allows us to pass in other selectors
 export const selectActiveBook = createSelector(
-    selectAll,
+    selectEntities,
     selectActiveBookId,
-    // Projector function to return the data you want
-    (books, activeBookId) => books.find(book => book.id === activeBookId) || null
+    (booksEntities, activeBookId) => {
+        return activeBookId ? booksEntities[activeBookId]! : null;
+    }
 );
+
+// export const selectCheeseNo = (state: State) => state.cheeseNo;
+
 export const selectEarningsTotals = createSelector(
     selectAll,
     calculateBooksGrossEarnings,
-    // Short for ...
-    // (books) => calculateBooksGrossEarnings(books)
 );
